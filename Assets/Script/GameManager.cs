@@ -1,95 +1,377 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 using TMPro;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
-    //these lists have all the dialogue for each phase of questions
+
+    public List<string> phaseZeroDialogue;
     public List<string> phaseOneDialogue;
     public List<string> phaseTwoDialogue;
     public List<string> phaseThreeDialogue;
     public List<string> phaseFourDialogue;
+    public List<string> phaseFiveDialogue;
+    public List<string> phaseSixDialogue;
+    public List<string> phaseSevenDialogue;
+    public List<string> phaseEightDialogue;
+    public List<string> phaseNineDialogue;
+    public List<string> phaseTenDialogue;
+    public List<string> phaseElevenDialogue;
+    public List<string> phaseTwelveDialogue;
+    public List<string> phaseThirteenDialogue;
+    public List<string> phaseFourteenDialogue;
+    public List<string> phaseFifteenDialogue;
 
-    //holds the phase we're currently going through
     List<string> currentDialogue;
 
-    //tracks the current phase and the line we're on in that phase
     int phaseIndex = 0;
     int dialogueIndex = 0;
 
-    //game object for all buttons
     public GameObject choiceOne;
     public GameObject choiceTwo;
     public GameObject nextButton;
+    public GameObject moss;
+    public GameObject spamtonSad;
+    public GameObject spamtonGarbage;
+    public GameObject dealButton;
+    public GameObject fakeTwo;
+    public GameObject redCross;
+    public GameObject replayButton;
 
-    //text component that is showing the dialogue
     public TMP_Text dialogueBox;
 
-    //"score" for how much of a clown u r
-    //int clownyLove = 0;
+    public Animator spamtonAnim;
 
-    //text for results of the quiz
-    //public string clownMessage;
-    //public string notAClownMessage;
+    public Image currentSprite;
+    public Sprite idleSprite;
+    public Sprite stareSprite;
+    public Sprite happySprite;
 
-    //animator components for each face
-    //public Animator faceyAnim;
-    //public Animator clownyAnim;
-
-    // Start is called before the first frame update
     void Start()
     {
-        //turn off the choice buttons
+        
+        GameObject spamton = GameObject.FindWithTag("Spamton");
+
+        nextButton.SetActive(true);
         choiceOne.SetActive(false);
         choiceTwo.SetActive(false);
-        //start the dialogue
-        currentDialogue = phaseOneDialogue;
+        moss.SetActive(false);
+        spamtonSad.SetActive(false);
+        spamtonGarbage.SetActive(false);
+        dealButton.SetActive(false);
+        fakeTwo.SetActive(false);
+        redCross.SetActive(false);
+        replayButton.SetActive(false);
+
+        currentDialogue = phaseZeroDialogue;
         dialogueBox.text = currentDialogue[dialogueIndex];
-        //faceyAnim.SetTrigger("isTalking");
+
+        spamtonAnim.SetTrigger("isTalking");
+
+        currentSprite = spamton.GetComponent<Image>();
+
     }
 
     void SetDialogueText()
     {
-        //if we haven't gotten our results yet
-        if (phaseIndex < 4)
-        {
-            //set the dialogue component to show the line we're on
+
             dialogueBox.text = currentDialogue[dialogueIndex];
-        }
+
     }
 
     public void AdvanceDialog()
     {
-        //if we haven't gotten our results yet
-        if (phaseIndex < 4)
+
+        if (phaseIndex != 7 && phaseIndex != 8 && phaseIndex != 9 && phaseIndex != 13 && phaseIndex != 14)
         {
-            //go to the next line
-            dialogueIndex++;
-            SetDialogueText();
-            //if we're on the last line of dialogue
-            if (dialogueIndex == currentDialogue.Count - 1)
-            {
-                //show the choices
-                SetupChoices();
-            }
+
+            spamtonAnim.SetTrigger("isTalking");
+
         }
-        //if we've seen our results
+
+        if (dialogueIndex == currentDialogue.Count - 1)
+        {
+            switch (phaseIndex)
+            {
+
+                case 0:
+                    phaseIndex = 1;
+                    break;
+                case 2:
+                    phaseIndex = 3;
+                    break;
+                case 4:
+                    phaseIndex = 5;
+                    break;
+                case 7:
+                    phaseIndex = 8;
+                    break;
+                case 8:
+                    phaseIndex = 9;
+                    break;
+                case 9:
+                    phaseIndex = 10;
+                    break;
+                case 10:
+                    phaseIndex = 11;
+                    break;
+                case 11:
+                    phaseIndex = 12;
+                    break;
+                case 12:
+                    phaseIndex = 13;
+                    break;
+                case 13:
+                    phaseIndex = 14;
+                    break;
+                case 14:
+                    phaseIndex = 15;
+                    break;
+
+            }
+
+            GoToNextPhase();
+
+        }
+
         else
         {
-            //go to the last scene
-            SceneManager.LoadScene("Start");
+
+            dialogueIndex++;
+
+            SetDialogueText();
+
         }
+
     }
 
-    void SetupChoices()
+    public void NahChoice()
     {
-        //turn off the next button and turn on the choice buttons
-        nextButton.SetActive(false);
-        choiceOne.SetActive(true);
-        choiceTwo.SetActive(true);
+
+        if (phaseIndex == 1 || phaseIndex == 3)
+        {
+
+            phaseIndex = 2;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 5)
+        {
+
+            phaseIndex = 6;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 6)
+        {
+
+            phaseIndex = 10;
+            GoToNextPhase();
+
+        }
+
     }
 
+    public void SureChoice()
+    {
+
+        if (phaseIndex == 1 || phaseIndex == 3)
+        {
+
+            phaseIndex = 4;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 5)
+        {
+
+            phaseIndex = 7;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 6)
+        {
+
+            phaseIndex = 7;
+            GoToNextPhase();
+
+        }
+
+    }
+
+    void GoToNextPhase()
+    {
+
+        nextButton.SetActive(false);
+        choiceOne.SetActive(false);
+        choiceTwo.SetActive(false);
+
+        dialogueIndex = 0;
+
+        switch (phaseIndex)
+        {
+
+            case 1:
+                phaseIndex = 1;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseOneDialogue;
+                nextButton.SetActive(false);
+                choiceOne.SetActive(true);
+                choiceTwo.SetActive(true);
+                break;
+            case 2:
+                phaseIndex = 2;
+                currentDialogue = phaseTwoDialogue;
+                nextButton.SetActive(true);
+                StareSprite();
+                break;
+            case 3:
+                phaseIndex = 3;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseThreeDialogue;
+                nextButton.SetActive(false);
+                choiceOne.SetActive(true);
+                choiceTwo.SetActive(true);
+                IdleSprite();
+                break;
+            case 4:
+                phaseIndex = 4;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseFourDialogue;
+                nextButton.SetActive(true);
+                choiceOne.SetActive(false);
+                choiceTwo.SetActive(false);
+                HappySprite();
+                break;
+            case 5:
+                phaseIndex = 5;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseFiveDialogue;
+                nextButton.SetActive(false);
+                choiceOne.SetActive(true);
+                choiceTwo.SetActive(true);
+                moss.SetActive(true);
+                HappySprite();
+                break;
+            case 6:
+                phaseIndex = 6;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseSixDialogue;
+                nextButton.SetActive(false);
+                choiceOne.SetActive(true);
+                choiceTwo.SetActive(true);
+                moss.SetActive(false);
+                spamtonSad.SetActive(true);
+                spamtonGarbage.SetActive(true);
+                StareSprite();
+                break;
+            case 7:
+                phaseIndex = 7;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseSevenDialogue;
+                nextButton.SetActive(true);
+                choiceOne.SetActive(false);
+                choiceTwo.SetActive(false);
+                moss.SetActive(true);
+                spamtonSad.SetActive(false);
+                spamtonGarbage.SetActive(false);
+                HappySprite();
+                break;
+            case 8:
+                phaseIndex = 8;
+                currentDialogue = phaseEightDialogue;
+                nextButton.SetActive(true);
+                HappySprite();
+                break;
+            case 9:
+                phaseIndex = 9;
+                currentDialogue = phaseNineDialogue;
+                nextButton.SetActive(true);
+                StareSprite();
+                break;
+            case 10:
+                phaseIndex = 10;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseTenDialogue;
+                nextButton.SetActive(false);
+                dealButton.SetActive(true);
+                fakeTwo.SetActive(true);
+                redCross.SetActive(true);
+                moss.SetActive(true);
+                spamtonSad.SetActive(false);
+                spamtonGarbage.SetActive(false);
+                StareSprite();
+                break;
+            case 11:
+                phaseIndex = 11;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseElevenDialogue;
+                nextButton.SetActive(true);
+                dealButton.SetActive(false);
+                fakeTwo.SetActive(false);
+                redCross.SetActive(false);
+                moss.SetActive(false);
+                HappySprite();
+                break;
+            case 12:
+                phaseIndex = 12;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseTwelveDialogue;
+                nextButton.SetActive(true);
+                IdleSprite();
+                break;
+            case 13:
+                phaseIndex = 13;
+                currentDialogue = phaseThirteenDialogue;
+                nextButton.SetActive(true);
+                break;
+            case 14:
+                phaseIndex = 14;
+                currentDialogue = phaseFourteenDialogue;
+                nextButton.SetActive(true);
+                StareSprite();
+                break;
+            case 15:
+                phaseIndex = 15;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseFifteenDialogue;
+                nextButton.SetActive(false);
+                replayButton.SetActive(true);
+                HappySprite();
+                break;
+
+        }
+
+        SetDialogueText();
+
+    }
+
+    void IdleSprite()
+    {
+
+        currentSprite.sprite = idleSprite;
+
+    }
+
+    void StareSprite()
+    {
+
+        currentSprite.sprite = stareSprite;
+
+    }
+
+    void HappySprite()
+    {
+
+        currentSprite.sprite = happySprite;
+
+    }
 
 }
