@@ -24,6 +24,22 @@ public class GameManager : MonoBehaviour
     public List<string> phaseThirteenDialogue;
     public List<string> phaseFourteenDialogue;
     public List<string> phaseFifteenDialogue;
+    public List<string> phaseSixteenDialogue;
+    public List<string> phaseSeventeenDialogue;
+    public List<string> phaseEighteenDialogue;
+    public List<string> phaseNineteenDialogue;
+    public List<string> phaseTwentyDialogue;
+    public List<string> phaseTwentyOneDialogue;
+    public List<string> phaseTwentyTwoDialogue;
+    public List<string> phaseTwentyThreeDialogue;
+    public List<string> phaseTwentyFourDialogue;
+    public List<string> phaseTwentyFiveDialogue;
+    public List<string> phaseTwentySixDialogue;
+    public List<string> phaseTwentySevenDialogue;
+    public List<string> phaseTwentyEightDialogue;
+    public List<string> phaseTwentyNineDialogue;
+    public List<string> phaseThirtyDialogue;
+    public List<string> phaseThirtyOneDialogue;
 
     List<string> currentDialogue;
 
@@ -40,6 +56,11 @@ public class GameManager : MonoBehaviour
     public GameObject fakeTwo;
     public GameObject redCross;
     public GameObject replayButton;
+    public GameObject menu;
+    public GameObject itemOne;
+    public GameObject itemTwo;
+    public GameObject itemThree;
+    public GameObject itemFour;
 
     public TMP_Text dialogueBox;
 
@@ -65,6 +86,7 @@ public class GameManager : MonoBehaviour
         fakeTwo.SetActive(false);
         redCross.SetActive(false);
         replayButton.SetActive(false);
+        menu.SetActive(false);
 
         currentDialogue = phaseZeroDialogue;
         dialogueBox.text = currentDialogue[dialogueIndex];
