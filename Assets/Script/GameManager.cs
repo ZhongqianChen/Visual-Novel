@@ -45,6 +45,12 @@ public class GameManager : MonoBehaviour
 
     int phaseIndex = 0;
     int dialogueIndex = 0;
+    int item = 0;
+
+    bool bought1 = false;
+    bool bought2 = false;
+    bool bought3 = false;
+    bool bought4 = false;
 
     public GameObject choiceOne;
     public GameObject choiceTwo;
@@ -61,6 +67,14 @@ public class GameManager : MonoBehaviour
     public GameObject itemTwo;
     public GameObject itemThree;
     public GameObject itemFour;
+    public GameObject soldOneButton;
+    public GameObject soldTwoButton;
+    public GameObject soldThreeButton;
+    public GameObject soldFourButton;
+    public GameObject soldOne;
+    public GameObject soldTwo;
+    public GameObject soldThree;
+    public GameObject soldFour;
 
     public TMP_Text dialogueBox;
 
@@ -126,7 +140,7 @@ public class GameManager : MonoBehaviour
                     phaseIndex = 3;
                     break;
                 case 4:
-                    phaseIndex = 5;
+                    phaseIndex = 16;
                     break;
                 case 7:
                     phaseIndex = 8;
@@ -138,7 +152,7 @@ public class GameManager : MonoBehaviour
                     phaseIndex = 10;
                     break;
                 case 10:
-                    phaseIndex = 11;
+                    phaseIndex = 18;
                     break;
                 case 11:
                     phaseIndex = 12;
@@ -151,6 +165,18 @@ public class GameManager : MonoBehaviour
                     break;
                 case 14:
                     phaseIndex = 15;
+                    break;
+                case 17:
+                    if (item == 1)
+                    {
+
+                        phaseIndex = 5;
+
+                    }
+                    break;
+                case 18:
+                    phaseIndex = 19;
+                    bought1 = true;
                     break;
 
             }
@@ -228,6 +254,15 @@ public class GameManager : MonoBehaviour
 
     }
 
+    public void Item1()
+    {
+
+        phaseIndex = 17;
+        item = 1;
+        GoToNextPhase();
+
+    }
+
     void GoToNextPhase()
     {
 
@@ -280,6 +315,7 @@ public class GameManager : MonoBehaviour
                 choiceOne.SetActive(true);
                 choiceTwo.SetActive(true);
                 moss.SetActive(true);
+                menu.SetActive(false);
                 HappySprite();
                 break;
             case 6:
@@ -367,6 +403,121 @@ public class GameManager : MonoBehaviour
                 nextButton.SetActive(false);
                 replayButton.SetActive(true);
                 HappySprite();
+                break;
+            case 16:
+                phaseIndex = 16;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseSixteenDialogue;
+                nextButton.SetActive(false);
+                menu.SetActive(true);
+                if (bought1 == true)
+                {
+                    soldOneButton.SetActive(true);
+                    soldOne.SetActive(true);
+                }
+                else
+                {
+                    soldOneButton.SetActive(false);
+                    soldOne.SetActive(false);
+                }
+                if (bought2 == true)
+                {
+                    soldTwoButton.SetActive(true);
+                    soldTwo.SetActive(true);
+                }
+                else
+                {
+                    soldTwoButton.SetActive(false);
+                    soldTwo.SetActive(false);
+                }
+                if (bought3 == true)
+                {
+                    soldThreeButton.SetActive(true);
+                    soldThree.SetActive(true);
+                }
+                else
+                {
+                    soldThreeButton.SetActive(false);
+                    soldThree.SetActive(false);
+                }
+                if (bought4 == true)
+                {
+                    soldFourButton.SetActive(true);
+                    soldFour.SetActive(true);
+                }
+                else
+                {
+                    soldFourButton.SetActive(false);
+                    soldFour.SetActive(false);
+                }
+                IdleSprite();
+                break;
+            case 17:
+                phaseIndex = 17;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseSeventeenDialogue;
+                nextButton.SetActive(true);
+                menu.SetActive(false);
+                IdleSprite();
+                break;
+            case 18:
+                phaseIndex = 18;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseEighteenDialogue;
+                nextButton.SetActive(true);
+                dealButton.SetActive(false);
+                fakeTwo.SetActive(false);
+                redCross.SetActive(false);
+                moss.SetActive(false);
+                StareSprite();
+                break;
+            case 19:
+                phaseIndex = 19;
+                spamtonAnim.SetTrigger("isTalking");
+                currentDialogue = phaseNineteenDialogue;
+                nextButton.SetActive(false);
+                menu.SetActive(true);
+                if (bought1 == true)
+                {
+                    soldOneButton.SetActive(true);
+                    soldOne.SetActive(true);
+                }
+                else
+                {
+                    soldOneButton.SetActive(false);
+                    soldOne.SetActive(false);
+                }
+                if (bought2 == true)
+                {
+                    soldTwoButton.SetActive(true);
+                    soldTwo.SetActive(true);
+                }
+                else
+                {
+                    soldTwoButton.SetActive(false);
+                    soldTwo.SetActive(false);
+                }
+                if (bought3 == true)
+                {
+                    soldThreeButton.SetActive(true);
+                    soldThree.SetActive(true);
+                }
+                else
+                {
+                    soldThreeButton.SetActive(false);
+                    soldThree.SetActive(false);
+                }
+                if (bought4 == true)
+                {
+                    soldFourButton.SetActive(true);
+                    soldFour.SetActive(true);
+                }
+                else
+                {
+                    soldFourButton.SetActive(false);
+                    soldFour.SetActive(false);
+                }
+                IdleSprite();
                 break;
 
         }
