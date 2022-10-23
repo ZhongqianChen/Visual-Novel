@@ -56,7 +56,6 @@ public class GameManager : MonoBehaviour
     public GameObject choiceTwo;
     public GameObject nextButton;
     public GameObject moss;
-    public GameObject spamtonSad;
     public GameObject spamtonGarbage;
     public GameObject dealButton;
     public GameObject fakeTwo;
@@ -75,6 +74,7 @@ public class GameManager : MonoBehaviour
     public GameObject soldTwo;
     public GameObject soldThree;
     public GameObject soldFour;
+    public GameObject shadow;
 
     public TMP_Text dialogueBox;
 
@@ -84,6 +84,7 @@ public class GameManager : MonoBehaviour
     public Sprite idleSprite;
     public Sprite stareSprite;
     public Sprite happySprite;
+    public Sprite sadSprite;
 
     void Start()
     {
@@ -94,13 +95,13 @@ public class GameManager : MonoBehaviour
         choiceOne.SetActive(false);
         choiceTwo.SetActive(false);
         moss.SetActive(false);
-        spamtonSad.SetActive(false);
         spamtonGarbage.SetActive(false);
         dealButton.SetActive(false);
         fakeTwo.SetActive(false);
         redCross.SetActive(false);
         replayButton.SetActive(false);
         menu.SetActive(false);
+        shadow.SetActive(false);
 
         currentDialogue = phaseZeroDialogue;
         dialogueBox.text = currentDialogue[dialogueIndex];
@@ -287,6 +288,7 @@ public class GameManager : MonoBehaviour
                 phaseIndex = 2;
                 currentDialogue = phaseTwoDialogue;
                 nextButton.SetActive(true);
+                shadow.SetActive(true);
                 StareSprite();
                 break;
             case 3:
@@ -296,6 +298,7 @@ public class GameManager : MonoBehaviour
                 nextButton.SetActive(false);
                 choiceOne.SetActive(true);
                 choiceTwo.SetActive(true);
+                shadow.SetActive(false);
                 IdleSprite();
                 break;
             case 4:
@@ -326,9 +329,8 @@ public class GameManager : MonoBehaviour
                 choiceOne.SetActive(true);
                 choiceTwo.SetActive(true);
                 moss.SetActive(false);
-                spamtonSad.SetActive(true);
                 spamtonGarbage.SetActive(true);
-                StareSprite();
+                SadSprite();
                 break;
             case 7:
                 phaseIndex = 7;
@@ -338,7 +340,6 @@ public class GameManager : MonoBehaviour
                 choiceOne.SetActive(false);
                 choiceTwo.SetActive(false);
                 moss.SetActive(true);
-                spamtonSad.SetActive(false);
                 spamtonGarbage.SetActive(false);
                 HappySprite();
                 break;
@@ -352,6 +353,7 @@ public class GameManager : MonoBehaviour
                 phaseIndex = 9;
                 currentDialogue = phaseNineDialogue;
                 nextButton.SetActive(true);
+                shadow.SetActive(true);
                 StareSprite();
                 break;
             case 10:
@@ -363,9 +365,9 @@ public class GameManager : MonoBehaviour
                 fakeTwo.SetActive(true);
                 redCross.SetActive(true);
                 moss.SetActive(true);
-                spamtonSad.SetActive(false);
+                shadow.SetActive(false);
                 spamtonGarbage.SetActive(false);
-                StareSprite();
+                SadSprite();
                 break;
             case 11:
                 phaseIndex = 11;
@@ -469,6 +471,7 @@ public class GameManager : MonoBehaviour
                 fakeTwo.SetActive(false);
                 redCross.SetActive(false);
                 moss.SetActive(false);
+                shadow.SetActive(true);
                 StareSprite();
                 break;
             case 19:
@@ -477,6 +480,7 @@ public class GameManager : MonoBehaviour
                 currentDialogue = phaseNineteenDialogue;
                 nextButton.SetActive(false);
                 menu.SetActive(true);
+                shadow.SetActive(false);
                 if (bought1 == true)
                 {
                     soldOneButton.SetActive(true);
@@ -544,6 +548,13 @@ public class GameManager : MonoBehaviour
     {
 
         currentSprite.sprite = happySprite;
+
+    }
+
+    void SadSprite()
+    {
+
+        currentSprite.sprite = sadSprite;
 
     }
 
