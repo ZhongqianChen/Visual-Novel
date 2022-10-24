@@ -50,7 +50,6 @@ public class GameManager : MonoBehaviour
     bool bought1 = false;
     bool bought2 = false;
     bool bought3 = false;
-    bool bought4 = false;
 
     public GameObject choiceOne;
     public GameObject choiceTwo;
@@ -65,18 +64,18 @@ public class GameManager : MonoBehaviour
     public GameObject itemOne;
     public GameObject itemTwo;
     public GameObject itemThree;
-    public GameObject itemFour;
     public GameObject soldOneButton;
     public GameObject soldTwoButton;
     public GameObject soldThreeButton;
-    public GameObject soldFourButton;
     public GameObject soldOne;
     public GameObject soldTwo;
     public GameObject soldThree;
-    public GameObject soldFour;
     public GameObject shadow;
     public GameObject friedSnow;
     public GameObject tomato;
+    public GameObject headless;
+    public GameObject horseless;
+    public GameObject man;
 
     public TMP_Text choiceOneText;
     public TMP_Text choiceTwoText;
@@ -87,11 +86,9 @@ public class GameManager : MonoBehaviour
     public TMP_Text itemOneText;
     public TMP_Text itemTwoText;
     public TMP_Text itemThreeText;
-    public TMP_Text itemFourText;
     public TMP_Text soldOneButtonText;
     public TMP_Text soldTwoButtonText;
     public TMP_Text soldThreeButtonText;
-    public TMP_Text soldFourButtonText;
 
     public TMP_Text dialogueBox;
 
@@ -110,14 +107,15 @@ public class GameManager : MonoBehaviour
     public AudioSource bigShot;
     public AudioSource laughtrack;
     public AudioSource wonSound;
+    public AudioSource dealDone;
+    public AudioSource vineBoom;
     public AudioClip talkSound;
     public AudioClip laughter;
-    public AudioClip bgm1;
-    public AudioClip bgm2;
-    public AudioClip bgm3;
     public AudioClip won;
+    public AudioClip boom;
 
     public bool tomatoWon = false;
+    public bool regret = false;
 
     void Start()
     {
@@ -137,6 +135,9 @@ public class GameManager : MonoBehaviour
         shadow.SetActive(false);
         friedSnow.SetActive(false);
         tomato.SetActive(false);
+        headless.SetActive(false);
+        horseless.SetActive(false);
+        man.SetActive(false);
 
         currentDialogue = phaseZeroDialogue;
         dialogueBox.text = currentDialogue[dialogueIndex];
@@ -215,13 +216,6 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (itemFour.activeInHierarchy == false)
-        {
-
-            itemFourText.color = Color.white;
-
-        }
-
         if (soldOneButton.activeInHierarchy == false)
         {
 
@@ -240,13 +234,6 @@ public class GameManager : MonoBehaviour
         {
 
             soldThreeButtonText.color = Color.white;
-
-        }
-
-        if (soldFourButton.activeInHierarchy == false)
-        {
-
-            soldFourButtonText.color = Color.white;
 
         }
 
@@ -294,6 +281,31 @@ public class GameManager : MonoBehaviour
             tomato.SetActive(true);
             dialogueIndex++;
             SetDialogueText();
+
+        }
+
+        if (phaseIndex == 27 && dialogueIndex == 2)
+        {
+
+            headless.SetActive(true);
+
+        }
+
+        if (phaseIndex == 27 && dialogueIndex == 4)
+        {
+
+            nextButton.SetActive(false);
+            choiceOne.SetActive(true);
+            choiceTwo.SetActive(true);
+
+        }
+
+        if (phaseIndex == 30 && dialogueIndex == 2)
+        {
+
+            man.SetActive(true);
+            vineBoom.PlayOneShot(boom);
+            StareSprite();
 
         }
 
@@ -369,22 +381,27 @@ public class GameManager : MonoBehaviour
                         phaseIndex = 21;
 
                     }
-                    if (item == 1)
+                    if (item == 3)
                     {
 
-                        phaseIndex = 5;
-
-                    }
-                    if (item == 1)
-                    {
-
-                        phaseIndex = 5;
+                        phaseIndex = 26;
 
                     }
                     GoToNextPhase();
                     break;
                 case 18:
-                    phaseIndex = 19;
+                    if (bought1 == true && bought2 == true && bought3 == true)
+                    {
+
+                        phaseIndex = 11;
+
+                    }
+                    else
+                    {
+
+                        phaseIndex = 19;
+
+                    }
                     GoToNextPhase();
                     break;
                 case 20:
@@ -404,7 +421,47 @@ public class GameManager : MonoBehaviour
                     GoToNextPhase();
                     break;
                 case 25:
+                    if (bought1 == true && bought2 == true && bought3 == true)
+                    {
+
+                        phaseIndex = 11;
+
+                    }
+                    else
+                    {
+
+                        phaseIndex = 19;
+
+                    }
+                    GoToNextPhase();
+                    break;
+                case 26:
+                    phaseIndex = 27;
+                    GoToNextPhase();
+                    break;
+                case 28:
+                    phaseIndex = 29;
+                    GoToNextPhase();
+                    break;
+                case 29:
                     phaseIndex = 19;
+                    regret = true;
+                    GoToNextPhase();
+                    break;
+                case 30:
+                    bought3 = true;
+                    if (bought1 == true && bought2 == true && bought3 == true)
+                    {
+
+                        phaseIndex = 11;
+
+                    }
+                    else
+                    {
+
+                        phaseIndex = 19;
+
+                    }
                     GoToNextPhase();
                     break;
 
@@ -451,6 +508,45 @@ public class GameManager : MonoBehaviour
 
         }
 
+        else if (phaseIndex == 27)
+        {
+
+            phaseIndex = 29;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 29)
+        {
+
+            if (dialogueIndex == 9)
+            {
+
+                ShadowSprite();
+                shadow.SetActive(true);
+                bigShot.Stop();
+                vineBoom.Stop();
+                spamtonAnim.enabled = false;
+                nextButton.SetActive(true);
+                choiceOne.SetActive(false);
+                choiceTwo.SetActive(false);
+                dialogueIndex++;
+                SetDialogueText();
+
+            }
+
+            else
+            {
+
+                dialogueIndex++;
+                SetDialogueText();
+                spamtonAnim.SetTrigger("isTalking");
+                vineBoom.PlayOneShot(boom);
+
+            }
+
+        }
+
     }
 
     public void SureChoice()
@@ -481,6 +577,22 @@ public class GameManager : MonoBehaviour
 
         }
 
+        else if (phaseIndex == 27)
+        {
+
+            phaseIndex = 30;
+            GoToNextPhase();
+
+        }
+
+        else if (phaseIndex == 29)
+        {
+
+            phaseIndex = 30;
+            GoToNextPhase();
+
+        }
+
     }
 
     public void Item1()
@@ -499,6 +611,27 @@ public class GameManager : MonoBehaviour
         phaseIndex = 17;
         item = 2;
         bought2 = true;
+        GoToNextPhase();
+
+    }
+
+    public void Item3()
+    {
+
+        if (regret == false)
+        {
+
+            phaseIndex = 17;
+
+        }
+        
+        else
+        {
+
+            phaseIndex = 28;
+
+        }
+        item = 3;
         GoToNextPhase();
 
     }
@@ -613,11 +746,31 @@ public class GameManager : MonoBehaviour
                 phaseIndex = 11;
                 spamtonAnim.SetTrigger("isTalking");
                 currentDialogue = phaseElevenDialogue;
+                dealDone.Play();
                 nextButton.SetActive(true);
-                dealButton.SetActive(false);
-                fakeTwo.SetActive(false);
-                redCross.SetActive(false);
-                moss.SetActive(false);
+                menu.SetActive(true);
+                shadow.SetActive(false);
+                tomato.SetActive(false);
+                friedSnow.SetActive(false);
+                man.SetActive(false);
+                headless.SetActive(false);
+                horseless.SetActive(false);
+                spamtonAnim.enabled = true;
+                if (bought1 == true)
+                {
+                    soldOneButton.SetActive(true);
+                    soldOne.SetActive(true);
+                }
+                if (bought2 == true)
+                {
+                    soldTwoButton.SetActive(true);
+                    soldTwo.SetActive(true);
+                }
+                if (bought3 == true)
+                {
+                    soldThreeButton.SetActive(true);
+                    soldThree.SetActive(true);
+                }
                 HappySprite();
                 break;
             case 12:
@@ -625,6 +778,7 @@ public class GameManager : MonoBehaviour
                 spamtonAnim.SetTrigger("isTalking");
                 currentDialogue = phaseTwelveDialogue;
                 nextButton.SetActive(true);
+                menu.SetActive(false);
                 IdleSprite();
                 break;
             case 13:
@@ -635,6 +789,7 @@ public class GameManager : MonoBehaviour
             case 14:
                 phaseIndex = 14;
                 currentDialogue = phaseFourteenDialogue;
+                dealDone.Pause();
                 nextButton.SetActive(true);
                 StareSprite();
                 break;
@@ -642,6 +797,7 @@ public class GameManager : MonoBehaviour
                 phaseIndex = 15;
                 spamtonAnim.SetTrigger("isTalking");
                 currentDialogue = phaseFifteenDialogue;
+                dealDone.UnPause();
                 nextButton.SetActive(false);
                 replayButton.SetActive(true);
                 HappySprite();
@@ -682,16 +838,6 @@ public class GameManager : MonoBehaviour
                     soldThreeButton.SetActive(false);
                     soldThree.SetActive(false);
                 }
-                if (bought4 == true)
-                {
-                    soldFourButton.SetActive(true);
-                    soldFour.SetActive(true);
-                }
-                else
-                {
-                    soldFourButton.SetActive(false);
-                    soldFour.SetActive(false);
-                }
                 IdleSprite();
                 break;
             case 17:
@@ -714,12 +860,16 @@ public class GameManager : MonoBehaviour
                 spamtonAnim.SetTrigger("isTalking");
                 currentDialogue = phaseNineteenDialogue;
                 bgm.UnPause();
-                bigShot.Stop();
+                dealDone.Stop();
                 nextButton.SetActive(false);
                 menu.SetActive(true);
                 shadow.SetActive(false);
                 tomato.SetActive(false);
                 friedSnow.SetActive(false);
+                man.SetActive(false);
+                headless.SetActive(false);
+                horseless.SetActive(false);
+                spamtonAnim.enabled = true;
                 if (bought1 == true)
                 {
                     soldOneButton.SetActive(true);
@@ -750,16 +900,6 @@ public class GameManager : MonoBehaviour
                     soldThreeButton.SetActive(false);
                     soldThree.SetActive(false);
                 }
-                if (bought4 == true)
-                {
-                    soldFourButton.SetActive(true);
-                    soldFour.SetActive(true);
-                }
-                else
-                {
-                    soldFourButton.SetActive(false);
-                    soldFour.SetActive(false);
-                }
                 IdleSprite();
                 break;
             case 20:
@@ -781,7 +921,7 @@ public class GameManager : MonoBehaviour
                 menu.SetActive(false);
                 friedSnow.SetActive(true);
                 bgm.Pause();
-                sans.PlayOneShot(bgm2);
+                sans.Play();
                 IdleSprite();
                 break;
             case 22:
@@ -796,7 +936,7 @@ public class GameManager : MonoBehaviour
                 spamtonAnim.enabled = true;
                 spamtonAnim.SetTrigger("isTalking");
                 nextButton.SetActive(true);
-                bigShot.PlayOneShot(bgm3);
+                bigShot.Play();
                 StareSprite();
                 break;
             case 24:
@@ -813,9 +953,64 @@ public class GameManager : MonoBehaviour
                 spamtonAnim.SetTrigger("isTalking");
                 nextButton.SetActive(true);
                 wonSound.PlayOneShot(won);
+                bigShot.Stop();
+                dealDone.Play();
                 HappySprite();
                 break;
-
+            case 26:
+                phaseIndex = 26;
+                currentDialogue = phaseTwentySixDialogue;
+                spamtonAnim.SetTrigger("isTalking");
+                nextButton.SetActive(true);
+                horseless.SetActive(true);
+                menu.SetActive(false);
+                HappySprite();
+                break;
+            case 27:
+                phaseIndex = 27;
+                currentDialogue = phaseTwentySevenDialogue;
+                bgm.Pause();
+                spamtonAnim.enabled = false;
+                nextButton.SetActive(true);
+                StareSprite();
+                break;
+            case 28:
+                phaseIndex = 28;
+                currentDialogue = phaseTwentyEightDialogue;
+                spamtonAnim.SetTrigger("isTalking");
+                menu.SetActive(false);
+                horseless.SetActive(true);
+                headless.SetActive(true);
+                nextButton.SetActive(true);
+                StareSprite();
+                break;
+            case 29:
+                phaseIndex = 29;
+                currentDialogue = phaseTwentyNineDialogue;
+                spamtonAnim.enabled = true;
+                spamtonAnim.SetTrigger("isTalking");
+                bigShot.Play();
+                bgm.Pause();
+                vineBoom.PlayOneShot(boom);
+                nextButton.SetActive(false);
+                choiceOne.SetActive(true);
+                choiceTwo.SetActive(true);
+                SadSprite();
+                break;
+            case 30:
+                phaseIndex = 30;
+                currentDialogue = phaseThirtyDialogue;
+                spamtonAnim.enabled = true;
+                spamtonAnim.SetTrigger("isTalking");
+                bigShot.Stop();
+                dealDone.Play();
+                nextButton.SetActive(true);
+                choiceOne.SetActive(false);
+                choiceTwo.SetActive(false);
+                headless.SetActive(false);
+                horseless.SetActive(false);
+                HappySprite();
+                break;
 
         }
 
